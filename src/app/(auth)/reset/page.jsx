@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import ResetClient from './ResetClient';
 
 const Reset = () => {
-  return (
-    <div>Reset</div>
-  )
-}
+  return <ResetClient></ResetClient>;
+};
 
-export default Reset
+export default Reset;
