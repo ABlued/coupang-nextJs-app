@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastProvider />
+        {typeof window !== 'undefined' && <ToastProvider />}
         {children}
       </body>
     </html>

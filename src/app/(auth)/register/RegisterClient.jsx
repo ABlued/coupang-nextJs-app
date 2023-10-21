@@ -9,6 +9,9 @@ import Divider from '@/components/divider/Divider';
 import { useRouter } from 'next/navigation';
 import LogoPath from '@/assets/colorful.svg';
 import Link from 'next/link';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase/firebase';
+
 function RegisterClient() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,9 +20,28 @@ function RegisterClient() {
 
   const router = useRouter();
 
-  const registerUser = () => {
+  const registerUser = (e) => {
     e.preventDefault();
+    if (password !== cpassword) {
+      return;
+    }
+
     setIsLoading(true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        setIsLoading(false);
+        toast.success('회원가입이 완료되었습니다.');
+        router.push('/login');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        setIsLoading(false);
+        toast.error(errorMessage);
+      });
   };
 
   return (
@@ -56,13 +78,13 @@ function RegisterClient() {
             <Input
               password
               icon="lock"
-              id="password"
-              name="password"
+              id="cpassword"
+              name="cpassword"
               label="비밀번호 확인"
               placeholder="비밀번호 확인"
               className={styles.control}
               value={cpassword}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setCPassword(e.target.value)}
             />
             <div className={styles.buttonGroup}>
               <Button type="submit" width="100%">
