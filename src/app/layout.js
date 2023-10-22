@@ -10,11 +10,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // if (typeof window === 'undefined') {
+  //   return null;
+  // }
   return (
     <html lang="en">
       <body className={inter.className}>
-        {typeof window !== 'undefined' && <ToastProvider />}
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   );
