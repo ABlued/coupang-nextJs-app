@@ -27,7 +27,7 @@ const LoginClient = () => {
   const router = useRouter();
 
   const redirectUser = () => {
-    // router.push('/');
+    router.push('/');
   };
 
   const loginUser = async (e) => {

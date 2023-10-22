@@ -45,7 +45,7 @@ const Header = () => {
   };
 
   if (
-    // pathname === '/login' ||
+    pathname === '/login' ||
     pathname === '/register' ||
     pathname === '/reset'
   ) {
