@@ -11,6 +11,13 @@ import AutoSignInCheckbox from '@/components/autoSignInCheckbox/AutoSignInCheckb
 import Divider from '@/components/divider/Divider';
 import Button from '@/components/button/Button';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import { auth } from '@/firebase/firebase';
 const LoginClient = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,9 +33,41 @@ const LoginClient = () => {
   const loginUser = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setIsLoading(false);
+        console.log('userCredential', userCredential);
+        toast.success('로그인에 성공했습니다.');
+        redirectUser();
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error('로그인에 실패했습니다.');
+
+        console.log(errorCode, errorMessage);
+        setIsLoading(false);
+        toast.error(errorMessage);
+      });
   };
 
-  const signInWithGoogle = async () => {};
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        toast.success('로그인에 성공했습니다.');
+        redirectUser();
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error('로그인에 실패했습니다.');
+        console.log(errorCode, errorMessage);
+        setIsLoading(false);
+        toast.error(errorMessage);
+      });
+  };
   return (
     <>
       {isLoading && <Loader />}
@@ -64,7 +103,9 @@ const LoginClient = () => {
               <AutoSignInCheckbox
                 checked={isAuthLogin}
                 onChange={() => setIsAuthLogin(!isAuthLogin)}
-              />
+              >
+                {'자동 로그인'}
+              </AutoSignInCheckbox>
               <Link href={'/reset'} className={styles.findLink}>
                 비밀번호 수정하기
                 <svg
@@ -93,7 +134,7 @@ const LoginClient = () => {
               </Button>
               <Divider />
               <div>
-                <Button onclick={signInWithGoogle}>구글 로그인 </Button>
+                <Button onClick={signInWithGoogle}>구글 로그인 </Button>
               </div>
             </div>
           </form>
