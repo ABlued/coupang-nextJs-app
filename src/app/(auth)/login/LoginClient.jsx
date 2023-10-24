@@ -37,7 +37,6 @@ const LoginClient = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setIsLoading(false);
-        console.log('userCredential', userCredential);
         toast.success('로그인에 성공했습니다.');
         redirectUser();
       })

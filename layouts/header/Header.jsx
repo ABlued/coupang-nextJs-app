@@ -7,11 +7,13 @@ import { auth } from '@/firebase/firebase';
 import { toast } from 'react-toastify';
 import { usePathname, useRouter } from 'next/navigation';
 import InnerHeader from '../innerHeader/InnerHeader';
-import { REMOVE_ACTIVE_USER } from '@/redux/slice/authSlice';
+import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from '@/redux/slice/authSlice';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
   const pathname = usePathname();
-  const [displayNamse, setDisplayName] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const dispatch = useDispatch();
   const router = useRouter();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -25,13 +27,20 @@ const Header = () => {
         }
 
         //  유저 정보를 리덕스 스토어에 저장하기
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            userName: user.displayName ? user.displayName : displayName,
+            userID: user.uid,
+          })
+        );
       } else {
         setDisplayName('');
         // 유저 정보를 리덕스 스토어에서 지우기
         dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, [displayNamse]);
+  }, [dispatch, displayName]);
 
   const logoutUser = () => {
     signOut(auth)
