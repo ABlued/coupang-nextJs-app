@@ -5,6 +5,10 @@ import React, { useState } from 'react';
 import styles from './AddProduct.module.scss';
 import Heading from '@/components/heading/Heading';
 import Button from '@/components/button/Button';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { db, storage } from '@/firebase/firebase';
+import { toast } from 'react-toastify';
+import { Timestamp, addDoc, collection } from 'firebase/firestore';
 const categories = [
   { id: 1, name: 'Laptop' },
   { id: 2, name: 'Electronics' },
@@ -40,9 +44,49 @@ const AddProductClient = () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageUpload = (e) => {};
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setUploadProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProduct({ ...product, imageURL: downloadURL });
+          toast.success('이미지를 성공적으로 업로드했습니다.');
+        });
+      }
+    );
+  };
   const addProduct = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    try {
+      addDoc(collection(db, 'products'), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.brand,
+        desc: product.desc,
+        createAt: Timestamp.now().toDate(),
+      });
+      setIsLoading(false);
+      setUploadProgress(0);
+      setProduct({ ...initialState });
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
   };
   return (
     <>
@@ -64,7 +108,7 @@ const AddProductClient = () => {
               <div className={styles.progress}>
                 <div
                   className={styles['progress-bar']}
-                  styles={{ width: `${uploadProgress}%` }}
+                  style={{ width: `${uploadProgress}%` }}
                 >
                   {uploadProgress < 100
                     ? `Uploading... ${uploadProgress}`
