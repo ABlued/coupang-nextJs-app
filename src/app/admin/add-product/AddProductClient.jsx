@@ -78,7 +78,7 @@ const AddProductClient = () => {
         price: Number(product.price),
         category: product.brand,
         desc: product.desc,
-        createAt: Timestamp.now().toDate(),
+        createdAt: Timestamp.now().toDate(),
       });
       setIsLoading(false);
       setUploadProgress(0);
