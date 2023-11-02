@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import Loader from '../loader/Loader';
 import ProductList from './productList/productList';
 import { GET_PRICE_RANGE, STORE_PRODUCTS } from '@/redux/slice/productSlice';
+import ProductFilter from './productFilter/ProductFilter';
 function Product() {
   const { data, isLoading } = useFetchCollection('products');
   const dispatch = useDispatch();
@@ -20,8 +21,11 @@ function Product() {
   return (
     <section className={styles.product}>
       <aside className={styles.filter}>
-        {isLoading ? <Loader basic /> : <ProductList />}
+        {isLoading ? null : <ProductFilter />}
       </aside>
+      <div className={styles.content}>
+        {isLoading ? <Loader basic /> : <ProductList />}
+      </div>
     </section>
   );
 }

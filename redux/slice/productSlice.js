@@ -29,7 +29,7 @@ const productSlice = createSlice({
 });
 
 export const { STORE_PRODUCTS, GET_PRICE_RANGE } = productSlice.actions;
-export const selectProducts = (state) => state.products.products;
-export const selectMinPrice = (state) => state.products.minPrice;
-export const selectMaxPrice = (state) => state.products.maxPrice;
+export const selectProducts = (state) => state.product.products;
+export const selectMinPrice = (state) => state.product.minPrice;
+export const selectMaxPrice = (state) => state.product.maxPrice;
 export default productSlice.reducer;
