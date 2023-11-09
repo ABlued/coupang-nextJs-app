@@ -67,9 +67,9 @@ function ProductFilter() {
       <h4>브랜드</h4>
       <div className={styles.brand}>
         <select value={brand} onChange={(e) => setBrand(e.target.value)}>
-          {allBrands.map((brand) => {
+          {allBrands.map((brand, index) => {
             return (
-              <option value={brand} key={brand}>
+              <option value={brand} key={brand + index}>
                 {brand}
               </option>
             );
