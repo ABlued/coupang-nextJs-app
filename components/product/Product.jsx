@@ -11,7 +11,6 @@ import ProductFilter from './productFilter/ProductFilter';
 function Product() {
   const { data, isLoading } = useFetchCollection('products');
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(STORE_PRODUCTS({ products: data }));
     dispatch(GET_PRICE_RANGE({ products: data }));

@@ -39,7 +39,7 @@ const filterSlice = createSlice({
     SORT_PRODUCTS: (state, action) => {
       const { products, sort } = action.payload;
       let tempProduct = [];
-      if (sort === 'Latest') {
+      if (sort === 'latest') {
         tempProduct = products;
         if (sort === 'lowest-price') {
           tempProduct = products.slice().sort((a, b) => a.price - b.price);
