@@ -5,7 +5,15 @@ import Image from 'next/image';
 import { priceFormat } from '@/utils/priceFormat';
 import { Rating } from 'react-simple-star-rating';
 import rocketBadgeIcon from '@/assets/badge-rocket.svg';
+import useFetchDocument from '@/hooks/useFetchDocument';
+
 function ProductItem({ id, name, price, imageURL }) {
+  const { documents } = useFetchDocument('reviews', ['productID', '==', id]);
+
+  let productRating = 0;
+  documents.map((doc) => {
+    productRating += doc.rating;
+  });
   const shortenText = (text, n) => {
     if (text.length > n) {
       const shortened = text.substr(0, n - 1) + '...';
@@ -29,8 +37,12 @@ function ProductItem({ id, name, price, imageURL }) {
             원 <Image src={rocketBadgeIcon} alt={'로켓 배송'} />
           </em>
           <div>
-            <Rating size={17} readonly initialValue={2} />
-            <span className={styles.ratingCount}>3</span>
+            <Rating
+              size={17}
+              readonly
+              initialValue={Number.isNaN(productRating)}
+            />
+            <span className={styles.ratingCount ?? 0}>{documents}</span>
           </div>
         </div>
       </div>
