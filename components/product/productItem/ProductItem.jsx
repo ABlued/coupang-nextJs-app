@@ -16,8 +16,8 @@ function ProductItem({ id, name, price, imageURL }) {
   });
   const shortenText = (text, n) => {
     if (text.length > n) {
-      const shortened = text.substr(0, n - 1) + '...';
-      return shortenText;
+      const shortenedText = text.substr(0, n - 1) + '...';
+      return shortenedText;
     }
     return text;
   };
