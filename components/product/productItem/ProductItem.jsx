@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { priceFormat } from '@/utils/priceFormat';
 import { Rating } from 'react-simple-star-rating';
 import rocketBadgeIcon from '@/assets/badge-rocket.svg';
-import useFetchDocument from '@/hooks/useFetchDocument';
+import useFetchDocuments from '@/hooks/useFetchDocuments';
 
 function ProductItem({ id, name, price, imageURL }) {
-  const { documents } = useFetchDocument('reviews', ['productID', '==', id]);
+  const { documents } = useFetchDocuments('reviews', ['productID', '==', id]);
 
   let productRating = 0;
   documents.map((doc) => {

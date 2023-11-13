@@ -1,29 +1,32 @@
 'use client';
-import { db } from '@/firebase/firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import React, { useCallback, useEffect, useState } from 'react';
 
-function useFetchDocument(collectionName, arg) {
-  const [documents, setDocuments] = useState([]);
+import { db } from '@/firebase/firebase';
+import { doc } from 'firebase/firestore';
+import { useCallback, useEffect, useState } from 'react';
+
+function useFetchDocument(collectionName, documentID) {
+  const [document, setDocument] = useState(null);
 
   const getDocument = useCallback(async () => {
-    const q = query(
-      collection(db, collectionName),
-      where(arg[0], arg[1], arg[2])
-    );
-    const querySnapshot = await getDocs(q);
-    let documentsArray = [];
-    querySnapshot.forEach((doc) => {
-      documentsArray.push(doc.data());
-    });
-    setDocuments(documentsArray);
-  }, [collectionName, arg[0], arg[1], arg[2]]);
+    const docRef = doc(db, collectionName, documentID);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const obj = {
+        id: documentID,
+        ...docSnap.data(),
+      };
+      setDocument(obj);
+    } else {
+      toast.error('Document not found');
+    }
+  }, [collectionName, documentID]);
 
   useEffect(() => {
     getDocument();
   }, [getDocument]);
 
-  return { documents };
+  return { document };
 }
 
 export default useFetchDocument;
