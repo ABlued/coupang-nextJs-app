@@ -11,11 +11,20 @@ import styles from './InnerHeader.module.scss';
 
 import logo from '@/assets/colorful.svg';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectProducts } from '@/redux/slice/productSlice';
+import { FILTER_BY_SEARCH } from '@/redux/slice/filterSlice';
 
 const InnerHeader = () => {
   const router = useRouter();
-  //dispatching actions
+  const dispatch = useDispatch();
+  // dispatching actions
   const [search, setSearch] = useState('');
+  const products = useSelector(selectProducts);
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, search }));
+  }, [dispatch, search, products]);
 
   const handleClick = () => {
     router.push('/cart');
@@ -29,7 +38,7 @@ const InnerHeader = () => {
           <Image src={logo} alt="logo" width={211} height={48} priority />
         </Link>
       </h1>
-      {/* <!-- 카테로기버튼 --> */}
+      {/* <!-- 카테고리버튼 --> */}
       <button type="button" className={styles.buttonCategory}>
         카테고리
       </button>
@@ -61,7 +70,11 @@ const InnerHeader = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <button type="button" className={styles.searchButton}></button>
+            <button
+              type="button"
+              className={styles.searchButton}
+              onClick={handleClick}
+            ></button>
             <button type="button" className={styles.voiceSearchButton}></button>
           </div>
         </fieldset>
