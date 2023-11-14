@@ -1,8 +1,9 @@
 'use client';
 
 import { db } from '@/firebase/firebase';
-import { doc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 function useFetchDocument(collectionName, documentID) {
   const [document, setDocument] = useState(null);
