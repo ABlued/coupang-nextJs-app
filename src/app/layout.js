@@ -1,9 +1,9 @@
-import ToastProvider from '@/components/toastProvider/ToastProvider';
+import ToastProvider from '@/src/components/toastProvider/ToastProvider';
 import './globals.css';
 import { Inter } from 'next/font/google';
-import Footer from '@/layouts/footer/Footer';
-import Header from '@/layouts/header/Header';
-import ReduxProviders from '@/redux/provider';
+import Footer from '@/src/layouts/footer/Footer';
+import Header from '@/src/layouts/header/Header';
+import ReduxProviders from '@/src/redux/provider';
 
 const inter = Inter({ subsets: ['latin'] });
 

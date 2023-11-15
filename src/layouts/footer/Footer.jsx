@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
 
-import colorLogo from '@/assets/colorful.svg';
-import facebookIcon from '@/assets/sns-facebook.svg';
-import instagramIcon from '@/assets/sns-instagram.svg';
-import naverIcon from '@/assets/sns-naver-blog.svg';
+import colorLogo from '@/src/assets/colorful.svg';
+import facebookIcon from '@/src/assets/sns-facebook.svg';
+import instagramIcon from '@/src/assets/sns-instagram.svg';
+import naverIcon from '@/src/assets/sns-naver-blog.svg';
 
 import Image from 'next/image';
 

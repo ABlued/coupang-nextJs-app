@@ -1,12 +1,15 @@
 'use client';
-import useFetchCollection from '@/hooks/useFetchCollection';
+import useFetchCollection from '@/src/hooks/useFetchCollection';
 import React from 'react';
 import styles from './Product.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import Loader from '../loader/Loader';
 import ProductList from './productList/productList';
-import { GET_PRICE_RANGE, STORE_PRODUCTS } from '@/redux/slice/productSlice';
+import {
+  GET_PRICE_RANGE,
+  STORE_PRODUCTS,
+} from '@/src/redux/slice/productSlice';
 import ProductFilter from './productFilter/ProductFilter';
 function Product() {
   const { data, isLoading } = useFetchCollection('products');

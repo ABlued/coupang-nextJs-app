@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './ProductItem.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import { priceFormat } from '@/utils/priceFormat';
+import { priceFormat } from '@/src/utils/priceFormat';
 import { Rating } from 'react-simple-star-rating';
-import rocketBadgeIcon from '@/assets/badge-rocket.svg';
-import useFetchDocuments from '@/hooks/useFetchDocuments';
+import rocketBadgeIcon from '@/src/assets/badge-rocket.svg';
+import useFetchDocuments from '@/src/hooks/useFetchDocuments';
 
 function ProductItem({ id, name, price, imageURL }) {
   const { documents } = useFetchDocuments('reviews', ['productID', '==', id]);

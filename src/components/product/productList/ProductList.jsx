@@ -1,12 +1,12 @@
 import {
   SORT_PRODUCTS,
   selectFilteredProducts,
-} from '@/redux/slice/filterSlice';
+} from '@/src/redux/slice/filterSlice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './ProductList.module.scss';
 import ProductItem from '../productItem/ProductItem';
-import Pagination from '@/components/pagination/Pagination';
+import Pagination from '@/src/components/pagination/Pagination';
 
 function ProductList() {
   const [sort, setSort] = useState('latest');

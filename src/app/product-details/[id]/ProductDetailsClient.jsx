@@ -1,19 +1,19 @@
 'use client';
-import useFetchDocument from '@/hooks/useFetchDocument';
 import { useParams } from 'next/navigation';
 import React from 'react';
 import styles from './ProductDetails.module.scss';
-import Loader from '@/components/loader/Loader';
 import Image from 'next/image';
 import { Rating } from 'react-simple-star-rating';
-import Divider from '@/components/divider/Divider';
-import { priceFormat } from '@/utils/priceFormat';
-import listCashIcon from '@/assets/list-cash-icon.png';
-import Button from '@/components/button/Button';
 import { setIndexConfiguration } from 'firebase/firestore';
 import { useState } from 'react';
-import useFetchDocuments from '@/hooks/useFetchDocuments';
-import ProductReviewItem from '@/components/product/productReviewItem/ProductReviewItem';
+import Loader from '@/src/components/loader/Loader';
+import Divider from '@/src/components/divider/Divider';
+import Button from '@/src/components/button/Button';
+import ProductReviewItem from '@/src/components/product/productReviewItem/ProductReviewItem';
+import useFetchDocuments from '@/src/hooks/useFetchDocuments';
+import useFetchDocument from '@/src/hooks/useFetchDocument';
+import { priceFormat } from '@/src/utils/priceFormat';
+import listCashIcon from '@/src/assets/list-cash-icon.png';
 const ProductDetailsClient = () => {
   const { id } = useParams();
   const { document: product } = useFetchDocument('products', id);

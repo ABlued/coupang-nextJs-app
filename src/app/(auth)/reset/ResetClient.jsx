@@ -1,13 +1,13 @@
 'use client';
-import Input from '@/components/Input/Input';
-import Button from '@/components/button/Button';
-import Heading from '@/components/heading/Heading';
-import Loader from '@/components/loader/Loader';
+import Input from '@/src/components/Input/Input';
+import Button from '@/src/components/button/Button';
+import Heading from '@/src/components/heading/Heading';
+import Loader from '@/src/components/loader/Loader';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './Reset.module.scss';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '@/firebase/firebase';
+import { auth } from '@/src/firebase/firebase';
 function ResetClient() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);

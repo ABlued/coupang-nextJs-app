@@ -3,13 +3,13 @@ import {
   selectMaxPrice,
   selectMinPrice,
   selectProducts,
-} from '@/redux/slice/productSlice';
+} from '@/src/redux/slice/productSlice';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './ProductFilter.module.scss';
-import { priceFormat } from '@/utils/priceFormat';
-import { FILTER_BY_CATEGORY } from '@/redux/slice/filterSlice';
+import { priceFormat } from '@/src/utils/priceFormat';
+import { FILTER_BY_CATEGORY } from '@/src/redux/slice/filterSlice';
 
 function ProductFilter() {
   const [category, setCategory] = useState('All');

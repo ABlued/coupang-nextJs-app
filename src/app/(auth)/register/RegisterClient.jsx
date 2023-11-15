@@ -1,16 +1,16 @@
 'use client';
-import Loader from '@/components/loader/Loader';
+import Loader from '@/src/components/loader/Loader';
 import React, { useState } from 'react';
 import styles from '../login/Auth.module.scss';
 import Image from 'next/image';
-import Input from '@/components/Input/Input';
-import Button from '@/components/button/Button';
-import Divider from '@/components/divider/Divider';
+import Input from '@/src/components/Input/Input';
+import Button from '@/src/components/button/Button';
+import Divider from '@/src/components/divider/Divider';
 import { useRouter } from 'next/navigation';
-import LogoPath from '@/assets/colorful.svg';
+import LogoPath from '@/src/assets/colorful.svg';
 import Link from 'next/link';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/firebase/firebase';
+import { auth } from '@/src/firebase/firebase';
 import { toast } from 'react-toastify';
 
 function RegisterClient() {

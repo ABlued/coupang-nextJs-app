@@ -1,19 +1,19 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import freshIcon from '@/assets/icon-fresh.svg';
-import rocketIcon from '@/assets/icon-rocket.svg';
-import newIcon from '@/assets/new.svg';
+import freshIcon from '@/src/assets/icon-fresh.svg';
+import rocketIcon from '@/src/assets/icon-rocket.svg';
+import newIcon from '@/src/assets/new.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import styles from './InnerHeader.module.scss';
 
-import logo from '@/assets/colorful.svg';
+import logo from '@/src/assets/colorful.svg';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectProducts } from '@/redux/slice/productSlice';
-import { FILTER_BY_SEARCH } from '@/redux/slice/filterSlice';
+import { selectProducts } from '@/src/redux/slice/productSlice';
+import { FILTER_BY_SEARCH } from '@/src/redux/slice/filterSlice';
 
 const InnerHeader = () => {
   const router = useRouter();

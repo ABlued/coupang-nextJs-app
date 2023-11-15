@@ -1,12 +1,12 @@
 'use client';
-import Loader from '@/components/loader/Loader';
+import Loader from '@/src/components/loader/Loader';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import styles from './AddProduct.module.scss';
-import Heading from '@/components/heading/Heading';
-import Button from '@/components/button/Button';
+import Heading from '@/src/components/heading/Heading';
+import Button from '@/src/components/button/Button';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { db, storage } from '@/firebase/firebase';
+import { db, storage } from '@/src/firebase/firebase';
 import { toast } from 'react-toastify';
 import { Timestamp, addDoc, collection } from 'firebase/firestore';
 const categories = [

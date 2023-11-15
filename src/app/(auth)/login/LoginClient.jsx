@@ -1,15 +1,15 @@
 'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import LogoPath from '@/assets/colorful.svg';
+import LogoPath from '@/src/assets/colorful.svg';
 
 import styles from './Auth.module.scss';
 import { useRouter } from 'next/navigation';
-import Loader from '@/components/loader/Loader';
-import Input from '@/components/Input/Input';
-import AutoSignInCheckbox from '@/components/autoSignInCheckbox/AutoSignInCheckbox';
-import Divider from '@/components/divider/Divider';
-import Button from '@/components/button/Button';
+import Loader from '@/src/components/loader/Loader';
+import Input from '@/src/components/Input/Input';
+import AutoSignInCheckbox from '@/src/components/autoSignInCheckbox/AutoSignInCheckbox';
+import Divider from '@/src/components/divider/Divider';
+import Button from '@/src/components/button/Button';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import {
@@ -17,7 +17,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
-import { auth } from '@/firebase/firebase';
+import { auth } from '@/src/firebase/firebase';
 const LoginClient = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

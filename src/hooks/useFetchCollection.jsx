@@ -1,5 +1,5 @@
 'use client';
-import { db } from '@/firebase/firebase';
+import { db } from '@/src/firebase/firebase';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
