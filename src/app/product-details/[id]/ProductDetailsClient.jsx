@@ -12,9 +12,17 @@ import listCashIcon from '@/assets/list-cash-icon.png';
 import Button from '@/components/button/Button';
 import { setIndexConfiguration } from 'firebase/firestore';
 import { useState } from 'react';
+import useFetchDocuments from '@/hooks/useFetchDocuments';
+import ProductReviewItem from '@/components/product/productReviewItem/ProductReviewItem';
 const ProductDetailsClient = () => {
   const { id } = useParams();
   const { document: product } = useFetchDocument('products', id);
+
+  const { documents: reviews } = useFetchDocuments('reviews', [
+    'productID',
+    '==',
+    id,
+  ]);
 
   const [count, setCount] = useState(1);
 
@@ -103,6 +111,30 @@ const ProductDetailsClient = () => {
           </div>
         </>
       )}
+      <div className={styles.card}>
+        <h3>상품평 {reviews.length}</h3>
+        <div>
+          {reviews.length === 0 ? (
+            <p className={styles.noReviewText}>
+              해당 상품에 대한 상품평이 아직 없습니다.
+            </p>
+          ) : (
+            <>
+              {reviews.map((item) => {
+                return (
+                  <ProductReviewItem
+                    key={item.id}
+                    rate={item.rate}
+                    review={item.review}
+                    reviewDate={item.reviewDate}
+                    userName={item.userName}
+                  />
+                );
+              })}
+            </>
+          )}
+        </div>
+      </div>
     </section>
   );
 };
