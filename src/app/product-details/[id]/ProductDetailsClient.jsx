@@ -14,6 +14,8 @@ import useFetchDocuments from '@/src/hooks/useFetchDocuments';
 import useFetchDocument from '@/src/hooks/useFetchDocument';
 import { priceFormat } from '@/src/utils/priceFormat';
 import listCashIcon from '@/src/assets/list-cash-icon.png';
+import { useDispatch } from 'react-redux';
+import { ADD_TO_CART } from '@/src/redux/slice/cartSlice';
 const ProductDetailsClient = () => {
   const { id } = useParams();
   const { document: product } = useFetchDocument('products', id);
@@ -25,8 +27,11 @@ const ProductDetailsClient = () => {
   ]);
 
   const [count, setCount] = useState(1);
+  const dispatch = useDispatch();
 
-  const addToCart = () => {};
+  const addToCart = () => {
+    dispatch(ADD_TO_CART({ ...product, quantity: count }));
+  };
 
   const today = new Date();
   const tomorrow = new Date(today.setDate(today.getDate() + 1));
