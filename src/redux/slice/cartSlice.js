@@ -40,10 +40,31 @@ const cartSlice = createSlice({
         0
       );
     },
+    CALCULATE_SUBTOTAL: (state) => {
+      const array = [];
+
+      state.cartItems.map((item) => {
+        const { price, cartQuantity } = item;
+        const cartItemAmount = price * cartQuantity;
+        return array.push(cartItemAmount);
+      });
+
+      const totalAmount = array.reduce((a, b) => {
+        return a + b;
+      }, 0);
+    },
+    SAVE_URL: (state, action) => {
+      state.previousURL = action.payload;
+    },
   },
 });
 
-export const { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } = cartSlice.actions;
+export const {
+  ADD_TO_CART,
+  CALCULATE_TOTAL_QUANTITY,
+  CALCULATE_SUBTOTAL,
+  SAVE_URL,
+} = cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;
