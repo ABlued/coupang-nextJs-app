@@ -5,6 +5,9 @@ import {
   ADD_TO_CART,
   CALCULATE_SUBTOTAL,
   CALCULATE_TOTAL_QUANTITY,
+  CLEAR_CART,
+  DECREASE_CART,
+  REMOVE_FROM_CART,
   SAVE_URL,
   selectCartItems,
   selectCartTotalAmount,
@@ -27,11 +30,17 @@ function CartClient() {
     dispatch(ADD_TO_CART(cart));
   };
 
-  const decreaseCart = (cart) => {};
+  const decreaseCart = (cart) => {
+    dispatch(DECREASE_CART(cart));
+  };
 
-  const removeFromCart = (cart) => {};
+  const removeFromCart = (cart) => {
+    dispatch(REMOVE_FROM_CART(cart));
+  };
 
-  const clearCart = () => {};
+  const clearCart = () => {
+    dispatch(CLEAR_CART());
+  };
 
   useEffect(() => {
     dispatch(CALCULATE_SUBTOTAL());
