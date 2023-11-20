@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import CheckoutAddressClient from './CheckoutAddressClient';
 
 const CheckoutAddress = () => {
-  return (
-    <div>CheckoutAddress</div>
-  )
-}
+  return <CheckoutAddressClient />;
+};
 
-export default CheckoutAddress
+export default CheckoutAddress;
