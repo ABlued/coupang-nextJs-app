@@ -58,6 +58,7 @@ function CartClient() {
       router.push('/login');
     }
   };
+
   useEffect(() => {
     dispatch(CALCULATE_SUBTOTAL());
     dispatch(CALCULATE_TOTAL_QUANTITY());
@@ -71,7 +72,7 @@ function CartClient() {
         <>
           <p className={styles.emptyText}>장바구니가 비어있습니다.</p>
           <div className={styles.emptyText}>
-            <Link href="/">계속 쇼핑하기</Link>
+            <Link href={'/'}>계속 쇼핑하기</Link>
           </div>
         </>
       ) : (
@@ -103,7 +104,7 @@ function CartClient() {
                         alt={name}
                         width={100}
                         height={100}
-                      ></Image>
+                      />
                     </td>
                     <td>{priceFormat(price)}원</td>
                     <td>
@@ -127,13 +128,13 @@ function CartClient() {
                 );
               })}
             </tbody>
-          </table>
+          </table>{' '}
           <div className={styles.summary}>
-            <Button onClick={clearCart} 카트 비우기></Button>
+            <Button onClick={clearCart}>카트 비우기</Button>
             <div className={styles.checkout}>
               <div className={styles.text}>
                 <h4>총 상품 개수</h4>
-                <p>{cartTotalQuantity}</p>
+                <p>{cartTotalQuantity}개</p>
               </div>
               <div className={styles.text}>
                 <h4>합계</h4>
