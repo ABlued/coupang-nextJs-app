@@ -19,26 +19,34 @@ const cartSlice = createSlice({
       const productIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
-      const increaseCount = action.payload.quantity ?? 1;
+      const increaseCount = action.payload.quantity
+        ? action.payload.quantity
+        : 1;
+
       if (productIndex >= 0) {
-        state.cartItems[productIndex].quantity += increaseCount;
+        state.cartItems[productIndex].cartQuantity += increaseCount;
         toast.success(`${action.payload.name} 상품이 하나 추가되었습니다.`);
       } else {
-        const tempProduct = {
-          ...action.payload,
-          cartTotalQuantity: increaseCount,
-        };
+        const tempProduct = { ...action.payload, cartQuantity: increaseCount };
         state.cartItems.push(tempProduct);
-        toast.success(`${action.payload.name} 상품이 추가되었습니다..`);
+        toast.success(`${action.payload.name} 상품이 추가되었습니다.`);
       }
-
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     CALCULATE_TOTAL_QUANTITY: (state) => {
-      state.cartTotalQuantity = state.cartItems.reduce(
-        (acc, cur) => acc + cur.quantity,
-        0
-      );
+      const array = [];
+      state.cartItems.map((item) => {
+        const { cartQuantity } = item;
+
+        const quantity = cartQuantity;
+        return array.push(quantity);
+      });
+
+      const totalQuantity = array.reduce((a, b) => {
+        return a + b;
+      }, 0);
+
+      state.cartTotalQuantity = totalQuantity;
     },
     CALCULATE_SUBTOTAL: (state) => {
       const array = [];
@@ -52,6 +60,7 @@ const cartSlice = createSlice({
       const totalAmount = array.reduce((a, b) => {
         return a + b;
       }, 0);
+      state.cartTotalAmount = totalAmount;
     },
     SAVE_URL: (state, action) => {
       state.previousURL = action.payload;
@@ -60,34 +69,31 @@ const cartSlice = createSlice({
       const productIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (state.cartItems[productIndex] > 1) {
-        state.cartItems[productIndex].quantity -= 1;
-        toast.info(`${action.payload.name} 개수 -1`);
-      } else if (state.cartItems[productIndex] === 1) {
-        const newItem = state.cartItems.filter(
+
+      if (state.cartItems[productIndex].cartQuantity > 1) {
+        state.cartItems[productIndex].cartQuantity -= 1;
+        toast.success(`${action.payload.name} 개수 -1`);
+      } else if (state.cartItems[productIndex].cartQuantity === 1) {
+        const newCartItem = state.cartItems.filter(
           (item) => item.id !== action.payload.id
         );
-        state.cartItems = newItem;
-        toast.info(
-          `${action.payload.name} 상품이 장바구니에서 삭제되었습니다.`
-        );
+        state.cartItems = newCartItem;
+        toast.success(`${action.payload.name}이 장바구니에서 삭제되었습니다.`);
       }
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     REMOVE_FROM_CART: (state, action) => {
-      const newItem = state.cartItems.filter(
+      const newCartItem = state.cartItems.filter(
         (item) => item.id !== action.payload.id
       );
-      state.cartItems = newItem;
+      state.cartItems = newCartItem;
+      toast.success(`${action.payload.name}이 장바구니에서 삭제되었습니다.`);
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
-      toast.success(
-        `${action.payload.name} 상품이 장바구니에서 삭제되었습니다.`
-      );
     },
     CLEAR_CART: (state) => {
       state.cartItems = [];
+      toast.success('장바구니가 비었습니다.');
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
-      toast.success('장바구니가 비워졌습니다.');
     },
   },
 });
