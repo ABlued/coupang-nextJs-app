@@ -1,30 +1,22 @@
 'use client';
 import React from 'react';
 import styles from './Checkout.module.scss';
+import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { useDispatch, useSelector } from 'react-redux';
 import Heading from '@/src/components/heading/Heading';
 import CheckoutForm from '@/src/components/checkoutForm/CheckoutForm';
 import Button from '@/src/components/button/Button';
-import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { useRouter } from 'next/navigation';
+import { selectShippingAddress } from '@/src/redux/slice/checkoutSlice';
 import {
-  CLEAR_CART,
   selectCartItems,
   selectCartTotalAmount,
 } from '@/src/redux/slice/cartSlice';
-import { toast } from 'react-toastify';
 import { selectEmail, selectUserId } from '@/src/redux/slice/authSlice';
-import { Timestamp, addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '@/src/firebase/firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
-import { selectShippingAddress } from '@/src/redux/slice/checkoutSlice';
-import { useState, useEffect } from 'react';
-function CheckoutClient() {
-  const [isSSR, setIsSSR] = useState(false);
 
-  useEffect(() => {
-    setIsSSR(true);
-  }, []);
-
+const CheckoutClient = () => {
   const userID = useSelector(selectUserId);
   const cartItems = useSelector(selectCartItems);
   const shippingAddress = useSelector(selectShippingAddress);
@@ -57,7 +49,7 @@ function CheckoutClient() {
           'base64'
         );
 
-        const confirmResponse = await fetch(url, {
+        const confirmResponse = fetch(url, {
           method: 'post',
           body: JSON.stringify({
             amount,
@@ -87,9 +79,13 @@ function CheckoutClient() {
           shippingAddress,
           createdAt: Timestamp.now().toDate(),
         };
-        await addDoc(collection(db, 'orders'), orderData);
-
-        router.push(`/checkout-success?orderId=${orderId}`);
+        try {
+          addDoc(collection(db, 'orders'), orderData);
+          dispatch(CLEAR_CART());
+          router.push(`/checkout-success?orderId=${orderId}`);
+        } catch (error) {
+          console.log(error);
+        }
       })
       .catch((error) => {
         if (error.code === 'USER_CANCEL') {
@@ -97,7 +93,6 @@ function CheckoutClient() {
         }
       });
   };
-  if (!isSSR) return null;
 
   return (
     <section>
@@ -114,6 +109,6 @@ function CheckoutClient() {
       </div>
     </section>
   );
-}
+};
 
 export default CheckoutClient;
